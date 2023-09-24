@@ -16,7 +16,7 @@ Parameters:
     Default: firstkey
 
 Resources:
-  myWebServer:
+  MyWebServer:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: !Ref latestAmiId
