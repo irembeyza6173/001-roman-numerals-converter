@@ -16,7 +16,7 @@ Parameters:
     Default: firstkey
 
 Resources:
-  MyWebServer:
+  myWebServer:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: !Ref latestAmiId
@@ -63,5 +63,5 @@ Outputs:
   WebsiteURL:
     Value: !Sub 
       - http://${PIA}
-      - PIA: !GetAtt MyWebServer.PublicDnsName
+      - PIA: !GetAtt myWebServer.PublicDnsName
     Description: Roman Numerals Converter Application URL
