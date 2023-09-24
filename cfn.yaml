@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 
 Description: |
- CloudFormation Template for Roman Numerals Converter Application. 
+  CloudFormation Template for Roman Numerals Converter Application. 
   This template creates Python Flask Web Application on Amazon Linux 2023  
   EC2 Instance with custom security group allowing http connections on port 80, 8080 and SSH connection on port 22. Roman Numerals Converter Application is downloaded from Github repository, then installed on Flask.
-  
+
 Parameters: 
   latestAmiId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
@@ -16,18 +16,18 @@ Parameters:
     Default: firstkey
 
 Resources:
-  MyWebServer:
+  myWebServer:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: !Ref latestAmiId
       InstanceType: t2.micro
       KeyName: !Ref keyName
       SecurityGroupIds: 
-        - !Ref MySecGrp
+        - !Ref mySecGrp
       Tags: 
         - Key: Name
-          Value: !Sub Web Server of ${AWS::StackName} Stack
-      UserData: !Base64 
+          Value: !Sub Web Server of ${AWS::StackName} Stack 
+      UserData: !Base64 |
         #! /bin/bash
         yum update -y
         yum install python3 -y
@@ -38,13 +38,13 @@ Resources:
         wget -P templates https://raw.githubusercontent.com/irembeyza6173/001-roman-numerals-converter/master/templates/index.html
         wget -P templates https://raw.githubusercontent.com/irembeyza6173/001-roman-numerals-converter/master/templates/result.html
         wget https://raw.githubusercontent.com/irembeyza6173/001-roman-numerals-converter/master/app.py
-        python3 app.py 
+        python3 app.py
 
-  MySecGrp:
+  mySecGrp:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: SSH, HTTP and Port 8080 # Required
-      GroupName: irembeyzasecgrpromen
+      GroupDescription: ssh http and port 8080 # Required
+      GroupName: beyzasecgrpromen
       SecurityGroupIngress: 
         - IpProtocol: tcp
           FromPort: 80
@@ -58,10 +58,10 @@ Resources:
           FromPort: 8080
           ToPort: 8080
           CidrIp: 0.0.0.0/0
-
+  
 Outputs:
   WebsiteURL:
-    Value: !Sub
+    Value: !Sub 
       - http://${PIA}
       - PIA: !GetAtt MyWebServer.PublicDnsName
     Description: Roman Numerals Converter Application URL
